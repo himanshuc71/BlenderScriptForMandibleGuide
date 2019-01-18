@@ -111,7 +111,7 @@ print("Mandible differenced")
     
 ##Differencing screwholes from recon    
 for i in range(0, 6):
-    mod = guide.modifiers.new('union3', 'BOOLEAN')
+    mod = recon.modifiers.new('union3', 'BOOLEAN')
     mod.solver = 'CARVE'
     mod.operation = "DIFFERENCE"
     mod.object = bpy.data.objects['Screws' + str(i)]
