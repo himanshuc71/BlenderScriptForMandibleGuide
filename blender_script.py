@@ -13,7 +13,6 @@ print("Fixing Normals")
 
 for obj in meshes:
     scn.objects.active = obj
-    # bpy.ops.object.editmode_toggle()
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.ops.mesh.select_all(action='SELECT')
     bpy.ops.mesh.normals_make_consistent(inside=False)  # or recalculate outside
@@ -22,6 +21,7 @@ for obj in meshes:
 mandible = bpy.data.objects['Mandible']
 connector = bpy.data.objects['Connector']
 guide = bpy.data.objects['MandibleGuide']
+recon = bpy.data.objects['ReconstructedMandible']
 
 
 # Remeshing, Union, then remshing two Handles
@@ -89,7 +89,7 @@ bpy.ops.object.modifier_apply(modifier="union3")
 
 print("Guide2")
 
-##Differencting screwholes
+##Differencing screwholes
 for i in range(0, 6):
     mod = guide.modifiers.new('union3', 'BOOLEAN')
     mod.solver = 'CARVE'
@@ -99,12 +99,25 @@ for i in range(0, 6):
     bpy.ops.object.modifier_apply(modifier="union3")
     print("Screw", i)
 
-# Difference Mandible
-mod = guide.modifiers.new('union3', 'BOOLEAN')
-mod.solver = 'CARVE'
-mod.operation = "DIFFERENCE"
-mod.object = mandible
-bpy.context.scene.objects.active = guide
-bpy.ops.object.modifier_apply(modifier="union3")
+# Difference Mandible from the guide for fit
+    mod = guide.modifiers.new('union3', 'BOOLEAN')
+    mod.solver = 'CARVE'
+    mod.operation = 'DIFFERENCE'
+    mod.object = mandible
+    bpy.context.scene.objects.active = guide
+    py.ops.object.modifier_apply(modifier="union3")
+    
+print("Mandible differenced")
+    
+##Differencing screwholes from recon    
+for i in range(0, 6):
+    mod = guide.modifiers.new('union3', 'BOOLEAN')
+    mod.solver = 'CARVE'
+    mod.operation = "DIFFERENCE"
+    mod.object = bpy.data.objects['Screws' + str(i)]
+    bpy.context.scene.objects.active = recon
+    bpy.ops.object.modifier_apply(modifier="union3")
+    
+print("Recon differenced")    
 
-print("Mandible")
+
