@@ -105,7 +105,7 @@ for i in range(0, 6):
     mod.operation = 'DIFFERENCE'
     mod.object = mandible
     bpy.context.scene.objects.active = guide
-    py.ops.object.modifier_apply(modifier="union3")
+    bpy.ops.object.modifier_apply(modifier="union3")
     
 print("Mandible differenced")
     
