@@ -13,6 +13,7 @@ print("Fixing Normals")
 
 for obj in meshes:
     scn.objects.active = obj
+    # bpy.ops.object.editmode_toggle()
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.ops.mesh.select_all(action='SELECT')
     bpy.ops.mesh.normals_make_consistent(inside=False)  # or recalculate outside
@@ -98,16 +99,6 @@ for i in range(0, 6):
     bpy.context.scene.objects.active = guide
     bpy.ops.object.modifier_apply(modifier="union3")
     print("Screw", i)
-
-# Difference Mandible from the guide for fit
-    mod = guide.modifiers.new('union3', 'BOOLEAN')
-    mod.solver = 'CARVE'
-    mod.operation = 'DIFFERENCE'
-    mod.object = mandible
-    bpy.context.scene.objects.active = guide
-    bpy.ops.object.modifier_apply(modifier="union3")
-    
-print("Mandible differenced")
     
 ##Differencing screwholes from recon    
 for i in range(0, 6):
@@ -120,4 +111,12 @@ for i in range(0, 6):
     
 print("Recon differenced")    
 
-
+# Difference Mandible from the guide for fit
+    mod = guide.modifiers.new('union3', 'BOOLEAN')
+    mod.solver = 'CARVE'
+    mod.operation = 'DIFFERENCE'
+    mod.object = mandible
+    bpy.context.scene.objects.active = guide
+    bpy.ops.object.modifier_apply(modifier="union3")
+    
+print("Mandible differenced")
