@@ -112,11 +112,11 @@ for i in range(0, 6):
 print("Recon differenced")    
 
 # Difference Mandible from the guide for fit
-    mod = guide.modifiers.new('union3', 'BOOLEAN')
-    mod.solver = 'CARVE'
-    mod.operation = 'DIFFERENCE'
-    mod.object = mandible
-    bpy.context.scene.objects.active = guide
-    bpy.ops.object.modifier_apply(modifier="union3")
+mod = guide.modifiers.new('union3', 'BOOLEAN')
+mod.solver = 'CARVE'
+mod.operation = 'DIFFERENCE'
+mod.object = mandible
+bpy.context.scene.objects.active = guide
+bpy.ops.object.modifier_apply(modifier="union3")
     
 print("Mandible differenced")
